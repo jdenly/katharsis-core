@@ -33,6 +33,7 @@ public class CollectionGet implements BaseController {
     @Override
     public boolean isAcceptable(JsonPath jsonPath, String requestType) {
         return jsonPath.isCollection()
+                && jsonPath.getParentResource() == null
                 && jsonPath instanceof ResourcePath
                 && HttpMethod.GET.name().equals(requestType);
     }
