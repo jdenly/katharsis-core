@@ -90,6 +90,20 @@ public class PathBuilderTest {
     }
 
     @Test
+    public void onNestedResourcePathWithResourceNameShouldReturnNestedPath() {
+        // GIVEN
+        String path = "/users/1/projects";
+
+        // WHEN
+        JsonPath jsonPath = pathBuilder.buildPath(path);
+
+        // THEN
+        JsonPath expectedPath = new FieldPath("projects");
+        expectedPath.setParentResource(new ResourcePath("users", new PathIds("1")));
+        assertThat(jsonPath).isEqualTo(expectedPath);
+    }
+
+    @Test
     public void onNestedResourceInstancePathShouldThrowException() {
         // GIVEN
         String path = "/tasks/1/project/2";
@@ -133,11 +147,11 @@ public class PathBuilderTest {
     @Test
     public void onRelationshipFieldInRelationshipsShouldThrowException() {
         // GIVEN
-        String path = "/users/1/relationships/projects";
+        String path = "/users/1/relationships/finishedProjects";
 
         // THEN
         expectedException.expect(ResourceFieldNotFoundException.class);
-        expectedException.expectMessage("projects");
+        expectedException.expectMessage("finishedProjects");
 
         // WHEN
         pathBuilder.buildPath(path);

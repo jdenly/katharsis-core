@@ -19,6 +19,10 @@ public class User {
     @JsonApiIncludeByDefault
     private List<Project> assignedProjects;
 
+    @JsonApiToMany
+    @JsonApiIncludeByDefault
+    private List<Project> projects;
+
     public Long getId() {
         return id;
     }
@@ -41,5 +45,13 @@ public class User {
 
     public void setAssignedProjects(List<Project> assignedProjects) {
         this.assignedProjects = assignedProjects;
+    }
+
+    public List<Project> getProjects() {
+        return projects;
+    }
+
+    public void setProjects(List<Project> projects) {
+        this.projects = projects;
     }
 }
